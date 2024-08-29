@@ -37,7 +37,7 @@ public class Evaluator {
 
 
           // TODO fix this line of code.
-          Operator newOperator = new Operator();
+          Operator newOperator = Operator.getOperator( expressionToken );
 
          
             while (operatorStack.peek().priority() >= newOperator.priority() ) {
@@ -59,7 +59,7 @@ public class Evaluator {
      * once no more tokens need to be scanned from StringTokenizer,
      * we need to evaluate the remaining sub-expressions.
      */
-    return 0;
+    return operandStack.pop().getValue();
   }
 
   public static void main(String[] args) throws InvalidTokenException {
