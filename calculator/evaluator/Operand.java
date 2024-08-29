@@ -5,25 +5,31 @@ package calculator.evaluator;
  * in a valid mathematical expression.
  */
 public class Operand {
+    private final int number;
+
     /**
      * construct operand from string token.
      */
-    public Operand(String token) {
-
+    public Operand(String token) throws InvalidTokenException {
+        if (check(token)) {
+            number = Integer.parseInt(token);
+        } else {
+            throw new InvalidTokenException("Operands can only be an integer.");
+        }
     }
 
     /**
      * construct operand from integer
      */
     public Operand(int value) {
-
+        this.number = value;
     }
 
     /**
      * return value of operand
      */
     public int getValue() {
-        return 0;
+        return this.number;
     }
 
     /**
@@ -31,6 +37,11 @@ public class Operand {
      * operand.
      */
     public static boolean check(String token) {
-        return false;
+        try {
+            Integer.parseInt(token);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
