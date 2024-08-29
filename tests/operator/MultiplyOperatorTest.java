@@ -1,6 +1,7 @@
 package tests.operator;
 
 import calculator.evaluator.Operand;
+import calculator.operators.MultiplyOperator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
