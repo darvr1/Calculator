@@ -14,7 +14,7 @@ public class Operand {
         if (check(token)) {
             number = Integer.parseInt(token);
         } else {
-            throw new InvalidTokenException("Operands can only be an integer.");
+            throw new InvalidTokenException(token);
         }
     }
 
