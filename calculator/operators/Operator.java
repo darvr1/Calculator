@@ -19,10 +19,11 @@ public abstract class Operator {
 
     private static final Map<String, Operator> operators = new HashMap<>();
     static {
-         operators.put("+", new AdditionOperator());
-         operators.put("-", new SubtractionOperator());
-         operators.put("*", new MultiplicationOperator());
-         operators.put("/", new DivisionOperator());
+         operators.put("+", new AddOperator());
+         operators.put("-", new SubtractOperator());
+         operators.put("*", new MultiplyOperator());
+         operators.put("/", new DivideOperator());
+         operators.put("^", new PowerOperator());
     }
 
     /**
