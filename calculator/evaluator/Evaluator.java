@@ -35,31 +35,34 @@ public class Evaluator {
             throw new InvalidTokenException(expressionToken);
           }
 
-
-          // TODO fix this line of code.
           Operator newOperator = Operator.getOperator( expressionToken );
 
-         
-            while (operatorStack.peek().priority() >= newOperator.priority() ) {
-              Operator operatorFromStack = operatorStack.pop();
-              Operand operandTwo = operandStack.pop();
-              Operand operandOne = operandStack.pop();
-              Operand result = operatorFromStack.execute( operandOne, operandTwo );
-              operandStack.push( result );
+            while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() ) {
+              compute();
             }
 
             operatorStack.push( newOperator );
-          
         }
       }
     }
-
 
     /*
      * once no more tokens need to be scanned from StringTokenizer,
      * we need to evaluate the remaining sub-expressions.
      */
+    while (!operatorStack.isEmpty()) {
+      compute();
+    }
+
     return operandStack.pop().getValue();
+  }
+
+  private void compute() {
+    Operator operatorFromStack = operatorStack.pop();
+    Operand operandTwo = operandStack.pop();
+    Operand operandOne = operandStack.pop();
+    Operand result = operatorFromStack.execute( operandOne, operandTwo );
+    operandStack.push( result );
   }
 
   public static void main(String[] args) throws InvalidTokenException {
