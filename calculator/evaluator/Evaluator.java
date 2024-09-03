@@ -2,6 +2,7 @@ package calculator.evaluator;
 
 import calculator.operators.*;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
@@ -37,11 +38,16 @@ public class Evaluator {
 
           Operator newOperator = Operator.getOperator( expressionToken );
 
-            while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority() ) {
+          if (newOperator instanceof OpeningParenthesis) {
+            operatorStack.push(newOperator);
+          } else if (newOperator instanceof ClosingParenthesis) {
+            evaluateParenthesis();
+          } else { // Other operators
+            while (!operatorStack.isEmpty() && operatorStack.peek().priority() >= newOperator.priority()) {
               compute();
             }
-
-            operatorStack.push( newOperator );
+            operatorStack.push(newOperator);
+          }
         }
       }
     }
@@ -51,18 +57,41 @@ public class Evaluator {
      * we need to evaluate the remaining sub-expressions.
      */
     while (!operatorStack.isEmpty()) {
+      // Check for leftover opening parenthesis
+      if (operatorStack.peek() instanceof OpeningParenthesis) {
+        throw new InvalidTokenException("Unbalanced parenthesis");
+      }
       compute();
     }
 
     return operandStack.pop().getValue();
   }
 
+  /**
+   * Computes the result of applying the operator on the top two operands from the stack.
+   * Pops the operator and operands, computes, then the result gets pushed onto the operand stack.
+   */
   private void compute() {
     Operator operatorFromStack = operatorStack.pop();
     Operand operandTwo = operandStack.pop();
     Operand operandOne = operandStack.pop();
     Operand result = operatorFromStack.execute( operandOne, operandTwo );
     operandStack.push( result );
+  }
+
+  /**
+   * Evaluates the expression inside the parenthesis.
+   * @throws InvalidTokenException If there is no opening parenthesis found.
+   */
+  private void evaluateParenthesis() throws InvalidTokenException {
+    try {
+      while (!(operatorStack.peek() instanceof OpeningParenthesis)) {
+        compute();
+      }
+    } catch (EmptyStackException e) {
+      throw new InvalidTokenException("Unbalanced parenthesis");
+    }
+    operatorStack.pop(); // Pop opening parenthesis
   }
 
   public static void main(String[] args) throws InvalidTokenException {
