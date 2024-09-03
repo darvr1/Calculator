@@ -60,11 +60,6 @@ public abstract class Operator {
      * Think about what happens if we add more operators.
      */
     public static boolean check(String token) {
-        for (String key : operators.keySet()) {
-            if (token.equals(key)) {
-                return true;
-            }
-        }
-        return false;
+        return operators.containsKey(token);
     }
 }
