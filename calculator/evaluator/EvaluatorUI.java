@@ -5,11 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EmptyStackException;
 
 public class EvaluatorUI extends JFrame implements ActionListener {
 
      private JTextField expressionTextField = new JTextField();
      private JPanel buttonPanel = new JPanel();
+     private final Evaluator calculator = new Evaluator();
 
      // total of 20 buttons on the calculator,
      // numbered from left to right, top to bottom
@@ -66,7 +68,31 @@ public class EvaluatorUI extends JFrame implements ActionListener {
       *                          button is pressed.
       */
      public void actionPerformed(ActionEvent actionEventObject) {
+         String expression;
+         String buttonInput = actionEventObject.getActionCommand();
 
-
+         switch (buttonInput) {
+             case "=":
+                 expression = expressionTextField.getText();
+                 try {
+                     String result = String.valueOf(calculator.evaluateExpression(expression));
+                     expressionTextField.setText(result);
+                 } catch (InvalidTokenException e) {
+                     System.err.println("Invalid token in expression: " + expression);
+                 }
+                 break;
+             case "CE":
+                 String a = expressionTextField.getText();
+                 // Remove the last character
+                 if (!a.isEmpty()) expressionTextField.setText(a.substring(0, a.length() - 1));
+                 break;
+             case "C":
+                 expressionTextField.setText("");
+                 break;
+             default:
+                 expression = expressionTextField.getText();
+                 // Concatenate input with current expression
+                 expressionTextField.setText(expression + buttonInput);
+         }
      }
  }
