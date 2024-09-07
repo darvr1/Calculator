@@ -78,10 +78,7 @@ public class EvaluatorUI extends JFrame implements ActionListener {
                      String result = String.valueOf(calculator.evaluateExpression(expression));
                      expressionTextField.setText(result);
                  } catch (InvalidTokenException e) {
-                     // Do nothing
-                     // Set field to "Error"?
-                     // Would really suck if I'm putting in a long equation then misclick the equal sign
-                     // and delete the entire equation.
+                     System.err.println("Invalid token in expression: " + expression);
                  }
                  break;
              case "CE":
