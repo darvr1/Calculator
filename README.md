@@ -2,11 +2,11 @@
 
 ## Student Information
 
-### Student Name  : Name here
+### Student Name  : Dale Rivera
 
-### Student ID    : ID here
+### Student ID    : 922792075
 
-### Student Email : Email here
+### Student Email : drivera@sfsu.edu
 
 ## Requirements
 
