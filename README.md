@@ -4,10 +4,6 @@
 
 ### Student Name  : Dale Rivera
 
-### Student ID    : 922792075
-
-### Student Email : drivera@sfsu.edu
-
 ## Requirements
 
 - Implement Operand Class
